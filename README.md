@@ -25,17 +25,17 @@ You can append additional tags to be captured by Sentry. Tags content can be ext
 
 ```go
 echosentry.SetTags(func(c *echo.Context) map[string]string {
-        return map[string]string{
-            "endpoint":       c.Request().URL.String(),
-            "http_interface": c.Request().Proto,
-            "app_version":    appVersion,
-        }
-    })
+    return map[string]string{
+        "endpoint":       c.Request().URL.String(),
+        "http_interface": c.Request().Proto,
+        "app_version":    appVersion,
+    }
+})
 ```
 
 # TODO
 - Log the user info (user context), currently raven-go has an issue with that...
-- expose more options
+- Expose more options
 
 # License
 MIT License. A copy is included with the source.
