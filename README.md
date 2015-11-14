@@ -1,4 +1,5 @@
 # echosentry
+[![GoDoc](https://godoc.org/github.com/01walid/echosentry?status.svg)](https://godoc.org/github.com/01walid/echosentry)
 
 A sentry ([raven-go](https://github.com/getsentry/raven-go)) middleware for [echo](https://github.com/labstack/echo) micro web framework.
 

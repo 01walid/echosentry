@@ -17,7 +17,7 @@ type Sentry struct {
 }
 
 // TagsFunc given a request context, extract some additional tags and return
-// them as map[string]string as required by the raven client
+// them as map[string]string as required by the raven client.
 type TagsFunc func(c *echo.Context) map[string]string
 
 var (
@@ -25,7 +25,7 @@ var (
 	tagsFunc TagsFunc
 )
 
-// SetDSN creates a raven client and sets its Sentry server DSN
+// SetDSN creates a raven client and sets its Sentry server DSN.
 func SetDSN(dsn string) {
 	client, err := raven.New(dsn)
 	if err != nil {
@@ -34,21 +34,21 @@ func SetDSN(dsn string) {
 	sentry.RavenClient = client
 }
 
-// WithContext sets weather or not the HTTP context is sent with the log
-// this adds info about the user's browser, URL, OS, device, interface_type ..etc
+// WithContext sets weather or not the HTTP context is sent with the log.
+// This adds info about the user's browser, URL, OS, device, interface_type ..etc
 func WithContext(yepnope bool) {
 	sentry.withContext = yepnope
 }
 
-// Sets any other additional tags to be captured by Sentry
+// Sets any other additional tags to be captured by Sentry.
 // Tags can be extracted from the current request context
-// or just static tags, e.g. tags["app_version"] = appVersion
+// or just static tags, e.g. tags["app_version"] = appVersion.
 func SetTags(fn TagsFunc) {
 	tagsFunc = fn
 }
 
 // Middleware returns an echo middleware which recovers from panics anywhere in the chain
-// and logs to the sentry server specified in DSN
+// and logs to the sentry server specified in DSN.
 func Middleware() echo.MiddlewareFunc {
 
 	return func(h echo.HandlerFunc) echo.HandlerFunc {
