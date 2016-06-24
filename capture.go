@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/getsentry/raven-go"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/engine/standard"
 	"log"
 	"runtime/debug"
 )
@@ -18,7 +19,7 @@ type Sentry struct {
 
 // TagsFunc given a request context, extract some additional tags and return
 // them as map[string]string as required by the raven client.
-type TagsFunc func(c *echo.Context) map[string]string
+type TagsFunc func(c echo.Context) map[string]string
 
 var (
 	sentry   = &Sentry{}
@@ -52,7 +53,7 @@ func SetTags(fn TagsFunc) {
 func Middleware() echo.MiddlewareFunc {
 
 	return func(h echo.HandlerFunc) echo.HandlerFunc {
-		return func(c *echo.Context) error {
+		return func(c echo.Context) error {
 			defer func() {
 				if rval := recover(); rval != nil {
 					debug.PrintStack()
@@ -65,7 +66,7 @@ func Middleware() echo.MiddlewareFunc {
 					httpContext := &raven.Http{}
 
 					if sentry.withContext {
-						httpContext = raven.NewHttp(c.Request())
+						httpContext = raven.NewHttp(c.Request().(*standard.Request).Request)
 					}
 
 					// extract tags
