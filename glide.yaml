@@ -1,0 +1,7 @@
+package: github.com/01walid/echosentry
+import:
+- package: github.com/getsentry/raven-go
+- package: github.com/labstack/echo
+  version: ^2.0.2
+  subpackages:
+  - engine/standard
