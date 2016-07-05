@@ -1,7 +1,9 @@
 # echosentry
 [![GoDoc](https://godoc.org/github.com/01walid/echosentry?status.svg)](https://godoc.org/github.com/01walid/echosentry)
 
-A sentry ([raven-go](https://github.com/getsentry/raven-go)) middleware for [echo](https://github.com/labstack/echo) micro web framework.
+A sentry ([raven-go](https://github.com/getsentry/raven-go)) middleware for [echo](https://github.com/labstack/echo) (v2) micro web framework.
+
+**Note**: this support echo with the standard http engine (no fasthttp support yet)
 
 # Usage
 
@@ -24,17 +26,18 @@ echosentry.WithContext(false)
 You can append additional tags to be captured by Sentry. Tags content can be extracted from the current request context or just static tags, e.g. tags["app_version"] = appVersion.
 
 ```go
-echosentry.SetTags(func(c *echo.Context) map[string]string {
+echosentry.SetTags(func(c echo.Context) map[string]string {
     return map[string]string{
-        "endpoint":       c.Request().URL.String(),
-        "http_interface": c.Request().Proto,
+        "endpoint":       c.Request().(*standard.Request).Request.URL.String(),
+        "http_interface": c.Request().(*standard.Request).Request.Proto,
         "app_version":    appVersion,
     }
 })
 ```
 
+
 # TODO
-- Log the user info (user context), currently raven-go has an issue with that...
+- Log the user info (user context)
 - Expose more options
 
 # License
