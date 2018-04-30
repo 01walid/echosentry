@@ -28,8 +28,8 @@ You can append additional tags to be captured by Sentry. Tags content can be ext
 ```go
 echosentry.SetTags(func(c echo.Context) map[string]string {
     return map[string]string{
-        "endpoint":       c.Request().(*standard.Request).Request.URL.String(),
-        "http_interface": c.Request().(*standard.Request).Request.Proto,
+        "endpoint":       c.Request().URL.String(),
+        "http_interface": c.Request().Proto,
         "app_version":    appVersion,
     }
 })
