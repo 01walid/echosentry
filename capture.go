@@ -3,11 +3,11 @@ package echosentry
 import (
 	"errors"
 	"fmt"
-	"github.com/getsentry/raven-go"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/engine/standard"
 	"log"
 	"runtime/debug"
+
+	"github.com/labstack/echo"
+	"github.com/getsentry/raven-go"
 )
 
 // Sentry struct holding the raven client and some of its configs
@@ -66,7 +66,7 @@ func Middleware() echo.MiddlewareFunc {
 					httpContext := &raven.Http{}
 
 					if sentry.withContext {
-						httpContext = raven.NewHttp(c.Request().(*standard.Request).Request)
+						httpContext = raven.NewHttp(c.Request())
 					}
 
 					// extract tags
